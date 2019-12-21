@@ -7,8 +7,6 @@ public class Main {
 
     public static void main(String[] args) {
         boolean exit = true;
-        boolean nameContains;
-        boolean numberContains;
         Scanner scanner = new Scanner(System.in);
 
         while (exit) {
@@ -17,17 +15,21 @@ public class Main {
             if (same.equals("LIST")) {
                 printDirectory();
             } else if (same.matches("^^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{3,10}$") == true) {
-                if (directory.containsValue(same)) {
-                    printNameByNumber(same);
+                String phone = same;
+                if (directory.containsValue(phone)) {
+                    printNameByNumber(phone);
                 } else {
                     System.out.println("Введите имя: ");
                     String name = scanner.nextLine();
                     directory.put(name, same);
                 }
             } else if (same.matches("^^[а-яА-ЯёЁa-zA-Z]+$") == true) {
-                if (nameContains = directory.containsKey(same)) {
-                    printPhoneByName(same);
-                } else numberCheck(same);
+                String name = same;
+                if (directory.containsKey(name)) {
+                    printPhoneByName(name);
+                } else {
+                    numberCheck(name);
+                }
             } else {
                 System.out.println("Неверный формат ввода");
             }
@@ -60,7 +62,7 @@ public class Main {
         boolean exit = false;
         String number;
         Scanner scanner = new Scanner(System.in);
-        while (exit == false) {
+        while (!exit) {
             System.out.println("Введите цифры: ");
             number = scanner.nextLine();
             if (number.matches("^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{3,10}$")) {
@@ -70,5 +72,3 @@ public class Main {
         }
     }
 }
-
-
