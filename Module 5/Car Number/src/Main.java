@@ -8,15 +8,14 @@ public class Main {
 
     public static void main(String[] args) {
         numberGenerate(numbers);
-        while (true) {
-            System.out.print("Введите номер для поиска: ");
-            Scanner scanner = new Scanner(System.in);
-            String search = scanner.nextLine();
-            directSearch(search);
-            binarySearch(search);
-            hashSearch(search);
-            treeSearch(search);
-        }
+        System.out.print("Введите номер для поиска: ");
+        Scanner scanner = new Scanner(System.in);
+        String search = scanner.nextLine();
+        directSearch(search);
+        binarySearch(search);
+        hashSearch(search);
+        treeSearch(search);
+        
     }
 
     public static void numberGenerate(ArrayList<String> numbers) {
