@@ -8,24 +8,25 @@ public class Main {
 
     public static void main(String[] args) {
         numberGenerate(numbers);
-        System.out.print("Введите номер для поиска: ");
-        Scanner scanner = new Scanner(System.in);
-        String search = scanner.nextLine();
-        binarySearch(search);
-        directSearch(search);
-        hashSearch(search);
-        treeSearch(search);
+        while (true) {
+            System.out.print("Введите номер для поиска: ");
+            Scanner scanner = new Scanner(System.in);
+            String search = scanner.nextLine();
+            directSearch(search);
+            binarySearch(search);
+            hashSearch(search);
+            treeSearch(search);
+        }
     }
 
-    public static void numberGenerate(ArrayList numbers) {
-        String number;
+    public static void numberGenerate(ArrayList<String> numbers) {
         char[] letters = {'А', 'В', 'Е', 'К', 'М', 'Н', 'О', 'Р', 'С', 'Т', 'У', 'Х',};
         for (int i = 1; i < 201; i++) {
             for (int j = 0; j < 12; j++)
                 for (int k = 0; k < 12; k++)
                     for (int l = 0; l < 12; l++)
                         for (int m = 0; m < 10; m++) {
-                            number = String.valueOf(i);
+                            String number = String.valueOf(i);
                             number = String.valueOf(letters[j]) + String.valueOf(m) + String.valueOf(m) + String.valueOf(m) + String.valueOf(letters[k]) + String.valueOf(letters[l]) + number;
                             numbers.add(number);
                         }
@@ -36,23 +37,31 @@ public class Main {
 
     public static void directSearch(String search) {
         long time = System.nanoTime();
-        numbers.contains(search);
-        System.out.println("Потраченное время при прямом поиске: " + (System.nanoTime() - time));
+        if (numbers.contains(search)) {
+            System.out.println("Потраченное время при прямом поиске: " + (System.nanoTime() - time));
+        } else {
+            System.out.println("Номер не найден");
+        }
     }
-    public static void binarySearch(String search){
+
+    public static void binarySearch(String search) {
         long time = System.nanoTime();
-        Collections.binarySearch(numbers, search);
-        System.out.println("Потраченное время при бинарном поиске: " + (System.nanoTime() - time));
+        if (Collections.binarySearch(numbers, search) != -1) {
+            System.out.println("Потраченное время при бинарном поиске: " + (System.nanoTime() - time));
+        }
     }
-    public static void hashSearch(String search){
+
+    public static void hashSearch(String search) {
         long time = System.nanoTime();
-        hash.contains(search);
-        System.out.println("Потраченное время при хэш поиске поиске: " + (System.nanoTime() - time));
+        if (hash.contains(search)) {
+            System.out.println("Потраченное время при хэш поиске поиске: " + (System.nanoTime() - time));
+        }
     }
-    public static void treeSearch(String search){
+
+    public static void treeSearch(String search) {
         long time = System.nanoTime();
-        tree.contains(search);
-        System.out.println("Потраченное время при три поиске: " + (System.nanoTime() - time));
+        if (tree.contains(search)) {
+            System.out.println("Потраченное время при три поиске: " + (System.nanoTime() - time));
+        }
     }
 }
-// A999ВН111 АВЕКМНОРСТУХ
