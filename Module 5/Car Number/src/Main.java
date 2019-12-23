@@ -15,7 +15,6 @@ public class Main {
         binarySearch(search);
         hashSearch(search);
         treeSearch(search);
-        
     }
 
     public static void numberGenerate(ArrayList<String> numbers) {
@@ -45,7 +44,7 @@ public class Main {
 
     public static void binarySearch(String search) {
         long time = System.nanoTime();
-        if (Collections.binarySearch(numbers, search) != -1) {
+        if (Collections.binarySearch(numbers, search) > 0) {
             System.out.println("Потраченное время при бинарном поиске: " + (System.nanoTime() - time));
         }
     }
@@ -64,3 +63,4 @@ public class Main {
         }
     }
 }
+// A999ВН111 АВЕКМНОРСТУХ
