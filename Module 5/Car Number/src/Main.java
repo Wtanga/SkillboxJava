@@ -8,13 +8,15 @@ public class Main {
 
     public static void main(String[] args) {
         numberGenerate(numbers);
-        System.out.print("Введите номер для поиска: ");
-        Scanner scanner = new Scanner(System.in);
-        String search = scanner.nextLine();
-        directSearch(search);
-        binarySearch(search);
-        hashSearch(search);
-        treeSearch(search);
+        while (true) {
+            System.out.print("Введите номер для поиска: ");
+            Scanner scanner = new Scanner(System.in);
+            String search = scanner.nextLine();
+            directSearch(search);
+            binarySearch(search);
+            hashSearch(search);
+            treeSearch(search);
+        }
     }
 
     public static void numberGenerate(ArrayList<String> numbers) {
@@ -44,7 +46,7 @@ public class Main {
 
     public static void binarySearch(String search) {
         long time = System.nanoTime();
-        if (Collections.binarySearch(numbers, search) > 0) {
+        if (Collections.binarySearch(numbers, search) >= -1440) {
             System.out.println("Потраченное время при бинарном поиске: " + (System.nanoTime() - time));
         }
     }
