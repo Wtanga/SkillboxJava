@@ -16,7 +16,7 @@ public class Main {
         binarySearch(search);
         hashSearch(search);
         treeSearch(search);
-        
+
     }
 
     public static void numberGenerate(ArrayList<String> numbers) {
@@ -33,6 +33,7 @@ public class Main {
         }
         hash.addAll(numbers);
         tree.addAll(numbers);
+        Collections.sort(numbers);
     }
 
     public static void directSearch(String search) {
@@ -46,7 +47,7 @@ public class Main {
 
     public static void binarySearch(String search) {
         long time = System.nanoTime();
-        if (Collections.binarySearch(numbers, search) >= -1440) {
+        if (Collections.binarySearch(numbers, search) >= 0) {
             System.out.println("Потраченное время при бинарном поиске: " + (System.nanoTime() - time));
         }
     }
