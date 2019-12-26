@@ -7,30 +7,37 @@ public class DefaultAccount {
 
     }
 
-    public void withdraw(double withdraw) {
+    public boolean withdraw(double withdraw) {
         if (withdraw > 0.0 && balance > withdraw) {
             balance = balance - withdraw;
             System.out.println("You took from the card: " + withdraw + "rub");
+            return true;
         } else {
-            System.out.println("Error");
+            System.out.println("Error withdraw");
+            return false;
         }
     }
 
-    public void checkBalance() {
-        System.out.println("Your balance: " + balance + " rub");
+    public double checkBalance() {
+        return balance;
     }
 
-    public void deposit(double deposit) {
+    public boolean deposit(double deposit) {
         if (deposit > 0.0) {
             balance = balance + deposit;
             System.out.println("Your deposit: " + deposit + "rub");
+            return true;
         } else {
             System.out.println("Deposit value cannot be negative");
+            return false;
         }
     }
-    public void toTransfer(DefaultAccount account, double deposit)
-    {
-        balance = balance - deposit;
-        account.deposit(deposit);
+
+    public void toTransfer(DefaultAccount account, double deposit) {
+        if (withdraw(deposit)) {
+            account.deposit(deposit);
+        } else {
+            System.out.println("Transfer error");
+        }
     }
 }
