@@ -1,15 +1,9 @@
-package Accounts;
+package Clients;
 
-public class DefaultAccount {
-    protected double balance;
-
-    public DefaultAccount() {
-
-    }
-
+public class IE extends Client {
     public void withdraw(double withdraw) {
         if (withdraw > 0.0 && balance > withdraw) {
-            balance = balance - withdraw;
+            balance = balance - withdraw * 1.01;
             System.out.println("You took from the card: " + withdraw + "rub");
         } else {
             System.out.println("Error");
@@ -22,15 +16,14 @@ public class DefaultAccount {
 
     public void deposit(double deposit) {
         if (deposit > 0.0) {
-            balance = balance + deposit;
+            if (deposit < 1000) {
+                balance = balance + deposit * 0.99;
+            } else {
+                balance = balance + deposit * 0.995;
+            }
             System.out.println("Your deposit: " + deposit + "rub");
         } else {
             System.out.println("Deposit value cannot be negative");
         }
-    }
-    public void toTransfer(DefaultAccount account, double deposit)
-    {
-        balance = balance - deposit;
-        account.deposit(deposit);
     }
 }
