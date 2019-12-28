@@ -1,29 +1,19 @@
 package Clients;
 
 public class IE extends Client {
-    public void withdraw(double withdraw) {
-        if (withdraw > 0.0 && balance > withdraw) {
-            balance = balance - withdraw * 1.01;
-            System.out.println("You took from the card: " + withdraw + "rub");
-        } else {
-            System.out.println("Error");
-        }
-    }
-
-    public void checkBalance() {
-        System.out.println("Your balance: " + balance + " rub");
-    }
-
-    public void deposit(double deposit) {
+    static final double COMMISSION_LESS_THOUS = 0.99;
+    static final double COMMISSION_MORE_THOUS = 0.995;
+    @Override
+    public boolean deposit(double deposit) {
         if (deposit > 0.0) {
             if (deposit < 1000) {
-                balance = balance + deposit * 0.99;
+                return super.withdraw(deposit * COMMISSION_LESS_THOUS);
             } else {
-                balance = balance + deposit * 0.995;
+                return super.withdraw(deposit * COMMISSION_MORE_THOUS);
             }
-            System.out.println("Your deposit: " + deposit + "rub");
         } else {
             System.out.println("Deposit value cannot be negative");
+            return false;
         }
     }
 }
