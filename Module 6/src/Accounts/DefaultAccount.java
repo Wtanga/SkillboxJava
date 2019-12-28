@@ -9,7 +9,7 @@ public class DefaultAccount {
 
     public boolean withdraw(double withdraw) {
         if (withdraw > 0.0 && balance > withdraw) {
-            balance = balance - withdraw;
+            balance -= withdraw;
             System.out.println("You took from the card: " + withdraw + "rub");
             return true;
         } else {
@@ -24,7 +24,7 @@ public class DefaultAccount {
 
     public boolean deposit(double deposit) {
         if (deposit > 0.0) {
-            balance = balance + deposit;
+            balance += deposit;
             System.out.println("Your deposit: " + deposit + "rub");
             return true;
         } else {
