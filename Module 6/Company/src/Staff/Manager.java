@@ -1,15 +1,15 @@
 package Staff;
 
 public class Manager implements Employee {
-    private double percent = 0.05;
     private double fixedPart = 25000;
-    private double earnings = (int) (Math.random() * 180000);
+    private double earnings = (int) (Math.random() * 250000);
     private double monthSalary;
-    protected static double income;
+    public static double income;
 
     public Manager() {
+        double percent = 0.05;
         monthSalary = fixedPart + percent * earnings;
-        income += monthSalary;
+        income += earnings;
     }
 
     @Override
