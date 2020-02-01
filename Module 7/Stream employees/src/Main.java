@@ -26,7 +26,8 @@ public class Main {
                 .after(dateAfter))
                 .filter(employee ->  employee.getWorkStart()
                 .before(dateBefore))
-                .forEach(System.out::println);
+                .max(Comparator.comparing(Employee::getSalary))
+                .ifPresent(System.out::println);
     }
 
     private static ArrayList<Employee> loadStaffFromFile() {
