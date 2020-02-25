@@ -29,14 +29,14 @@ public class Main {
         // Stream FlatMap
         Stream<Flight> arrivalList = listOfTerminals.stream()
                 .flatMap(terminal -> terminal.getFlights().stream());
-        arrivalList.forEach(flight -> {
-            if(flight.getType() == Flight.Type.ARRIVAL
-                    && toLocalDateTime(flight.getDate()).isAfter(localMinus2Hours)
-                    && toLocalDateTime(flight.getDate()).isBefore(localPlus2Hours))
-                System.out.println("Дата: " + toLocalDateTime(flight.getDate()) + "\nТип: " +flight.getAircraft());
-        });
+        arrivalList.filter(flight -> flight.getType() == Flight.Type.ARRIVAL
+                && toLocalDateTime(flight.getDate()).isAfter(localMinus2Hours)
+                && toLocalDateTime(flight.getDate()).isBefore(localPlus2Hours) )
+                .forEach(flight ->
+                System.out.println("Дата: " + toLocalDateTime(flight.getDate()) + "\nТип: " +flight.getAircraft()));
+    };
 
-    }
+
     public static LocalDateTime toLocalDateTime(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
