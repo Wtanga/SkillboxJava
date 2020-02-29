@@ -13,31 +13,25 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         CustomerStorage executor = new CustomerStorage();
         for (; ; ) {
-            String command = scanner.nextLine();
-            String[] tokens = command.split("\\s+", 2);
-            if (tokens[0].equals("add")) {
-                try {
+            try {
+                String command = scanner.nextLine();
+                String[] tokens = command.split("\\s+", 2);
+                if (tokens[0].equals("add")) {
                     executor.addCustomer(tokens[1]);
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    System.out.println("Wrong format");
-                } catch (WrongNameFormatException ex){
-                    System.out.println("test");
-                }
-            } else if (tokens[0].equals("list")) {
-                executor.listCustomers();
-            } else if (tokens[0].equals("remove")) {
-                try {
+                } else if (tokens[0].equals("list")) {
+                    executor.listCustomers();
+                } else if (tokens[0].equals("remove")) {
                     executor.removeCustomer(tokens[1]);
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    System.out.println("Enter number");
                 }
-            }
-            if (tokens[0].equals("count")) {
-                System.out.println("There are " + executor.getCount() + " customers");
-            } else if (tokens[0].equals("help")) {
-                System.out.println(helpText);
-            } else {
-                System.out.println(commandError);
+                if (tokens[0].equals("count")) {
+                    System.out.println("There are " + executor.getCount() + " customers");
+                } else if (tokens[0].equals("help")) {
+                    System.out.println(helpText);
+                } else {
+                    System.out.println(commandError);
+                }
+            } catch (Exception ex){
+                System.out.println(ex.getMessage());
             }
         }
     }
