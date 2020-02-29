@@ -8,14 +8,12 @@ public class CustomerStorage {
     }
 
     public void addCustomer(String data) {
-        try {
-            String[] components = data.split("\\s+");
-            String name = components[0] + " " + components[1];
-            storage.put(name, new Customer(name, components[3], components[2]));
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            System.out.println("Wrong format\n Example: add Василий Петров " +
-                    "vasily.petrov@gmail.com +79215637722");
+        String[] components = data.split("\\s+");
+        String name = components[0] + " " + components[1];
+        if(components.length != 2){
+            throw new WrongNameFormatException("Components equals 2");
         }
+        storage.put(name, new Customer(name, components[3], components[2]));
     }
 
     public void listCustomers() {
@@ -28,5 +26,10 @@ public class CustomerStorage {
 
     public int getCount() {
         return storage.size();
+    }
+}
+class WrongNameFormatException extends RuntimeException {
+    public WrongNameFormatException(String message) {
+        super(message);
     }
 }
