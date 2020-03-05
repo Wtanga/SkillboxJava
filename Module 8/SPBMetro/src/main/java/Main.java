@@ -25,6 +25,7 @@ public class Main
         scanner = new Scanner(System.in);
         for(;;)
         {
+            System.out.println(stationIndex.getLine(2).getStations());
             Station from = takeStation("Введите станцию отправления:");
             Station to = takeStation("Введите станцию назначения:");
 

@@ -12,8 +12,8 @@
  *      Station1.4D → Station3.1J → Station 3.2K → Station3.3Q (Line 3)
  *
  * }</pre>
- *
  */
+
 import core.Line;
 import core.Station;
 import junit.framework.TestCase;
@@ -32,13 +32,14 @@ public class RouteCalculatorTest {
     RouteCalculator calculator = new RouteCalculator(stationIndex);
     List<Station> connectionStations = new ArrayList<>();
     Station A, B, C, D, Q, E, G, H, J, K;
+
     @Before
     public void mySetUp() throws Exception {
         route = new ArrayList<>();
 
-        Line line1 = new Line(1,"1");
-        Line line2 = new Line(2,"2");
-        Line line3 = new Line(3,"3");
+        Line line1 = new Line(1, "1");
+        Line line2 = new Line(2, "2");
+        Line line3 = new Line(3, "3");
 
 
         A = new Station("1.1", line1);
@@ -53,7 +54,9 @@ public class RouteCalculatorTest {
         Q = new Station("3.3", line3);
         line1.addStation(A);
         line1.addStation(B);
-        line1.addStation(E);
+        line1.addStation(C);
+        line1.addStation(D);
+        line2.addStation(E);
         line2.addStation(G);
         line2.addStation(H);
         line3.addStation(J);
@@ -65,7 +68,6 @@ public class RouteCalculatorTest {
         stationIndex.addLine(line3);
 
 
-
         connectionStations.add(B);
         connectionStations.add(E);
         connectionStations.add(D);
@@ -75,7 +77,7 @@ public class RouteCalculatorTest {
     }
 
     @Test
-    public void CalculateDuration(){
+    public void CalculateDuration() {
         route.add(A);
         route.add(B);
         route.add(E);
@@ -83,20 +85,32 @@ public class RouteCalculatorTest {
 
         double actual = RouteCalculator.calculateDuration(route);
         double expected = 8.5;
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void getShortestRoute_with_one_transfer() {
         List<Station> expected = Arrays.asList(A, B, C, D, J, K);
         List<Station> actual = calculator.getShortestRoute(A, K);
-        assertEquals( expected, actual );
+        assertEquals(expected, actual);
     }
+
     @Test
-    public void isConnected(){
+    public void isConnected() {
         boolean actual = calculator.isConnected(B, E);
-        assertEquals(true, actual );
+        assertEquals(true, actual);
         actual = calculator.isConnected(D, J);
-        assertEquals(true, actual );
+        assertEquals(true, actual);
+    }
+
+    @Test
+    public void getRouteWithOneConnection()
+    {
+        List<Station> expected = new ArrayList<>();
+        expected.add(A);
+        expected.add(B);
+        expected.add(E);
+        List<Station> actual = calculator.getRouteWithOneConnection(A, E);
+        assertEquals(expected, actual);
     }
 }
