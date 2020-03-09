@@ -14,13 +14,11 @@ public class Main
 {
     private static String dataFile = "src/main/resources/map.json";
     private static Scanner scanner;
-
     private static StationIndex stationIndex;
 
     public static void main(String[] args)
     {
         RouteCalculator calculator = getRouteCalculator();
-
         System.out.println("Программа расчёта маршрутов метрополитена Санкт-Петербурга\n");
         scanner = new Scanner(System.in);
         for(;;)

@@ -16,10 +16,8 @@
 
 import core.Line;
 import core.Station;
-import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -72,12 +70,11 @@ public class RouteCalculatorTest {
         connectionStations.add(E);
         connectionStations.add(D);
         connectionStations.add(J);
-
         stationIndex.addConnection(connectionStations);
     }
 
     @Test
-    public void CalculateDuration() {
+    public void calculateDuration() {
         route.add(A);
         route.add(B);
         route.add(E);
@@ -101,6 +98,8 @@ public class RouteCalculatorTest {
         assertEquals(true, actual);
         actual = calculator.isConnected(D, J);
         assertEquals(true, actual);
+        actual = calculator.isConnected(B, J);
+        assertEquals(false, actual);
     }
 
     @Test
@@ -109,8 +108,10 @@ public class RouteCalculatorTest {
         List<Station> expected = new ArrayList<>();
         expected.add(A);
         expected.add(B);
-        expected.add(E);
-        List<Station> actual = calculator.getRouteWithOneConnection(A, E);
+        expected.add(C);
+        expected.add(D);
+        expected.add(J);
+        List<Station> actual = calculator.getRouteWithOneConnection(A, J);
         assertEquals(expected, actual);
     }
 }
