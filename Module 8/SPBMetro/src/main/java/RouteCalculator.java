@@ -1,14 +1,11 @@
 import core.Station;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 
 public class RouteCalculator
 {
     private StationIndex stationIndex;
-
     private static double interStationDuration = 2.5;
     private static double interConnectionDuration = 3.5;
 
@@ -25,7 +22,7 @@ public class RouteCalculator
         }
 
         route = getRouteWithOneConnection(from, to);
-        if(route != null) {
+        if(route.size() != 0) {
             return route;
         }
 
@@ -138,7 +135,7 @@ public class RouteCalculator
         return null;
     }
 
-    private List<Station> getRouteWithTwoConnections(Station from, Station to)
+    List<Station> getRouteWithTwoConnections(Station from, Station to)
     {
         if (from.getLine().equals(to.getLine())) {
             return null;
