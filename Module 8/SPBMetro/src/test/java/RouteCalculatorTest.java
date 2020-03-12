@@ -16,30 +16,27 @@
  *
  * }</pre>
  */
-
 import core.Line;
 import core.Station;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import static junit.framework.TestCase.assertEquals;
 
 public class RouteCalculatorTest {
-    List<Station> route;
     StationIndex stationIndex = new StationIndex();
     RouteCalculator calculator = new RouteCalculator(stationIndex);
     List<Station> connectionStations = new ArrayList<>();
     List<Station> connectionStations2 = new ArrayList<>();
     List<Station> connectionStations3 = new ArrayList<>();
     Station A, B, C, D, Q, E, G, H, J, K, L;
+    private static final double ROUTE_TIME = 2.5;
+    private static final double CONNECTION_TIME = 3.5;
 
     @Before
     public void mySetUp() throws Exception {
-        route = new ArrayList<>();
 
         Line line1 = new Line(1, "1");
         Line line2 = new Line(2, "2");
@@ -89,14 +86,9 @@ public class RouteCalculatorTest {
 
     @Test
     public void calculate_duration() {
-        route.add(A);
-        route.add(B);
-        route.add(E);
-        route.add(G);
-
+        List<Station> route = Arrays.asList(A, B, E, G);
         double actual = RouteCalculator.calculateDuration(route);
-        double expected = 8.5;
-        assertEquals(expected, actual);
+        assertEquals(ROUTE_TIME + CONNECTION_TIME + ROUTE_TIME, actual);
     }
 
     @Test
@@ -117,15 +109,18 @@ public class RouteCalculatorTest {
     public void get_shortest_route_with_two_transfers() {
         List<Station> expected = Arrays.asList(B, C, D, J, K, L);
         List<Station> actual = calculator.getShortestRoute(B, L);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void isConnected() {
         boolean actual = calculator.isConnected(B, E);
         assertEquals(true, actual);
-        actual = calculator.isConnected(D, J);
-        assertEquals(true, actual);
-        actual = calculator.isConnected(B, J);
+    }
+
+    @Test
+    public void isConnected_stations_not_connected(){
+        boolean actual = calculator.isConnected(B, J);
         assertEquals(false, actual);
     }
 
@@ -139,24 +134,26 @@ public class RouteCalculatorTest {
         expected.add(J);
         List<Station> actual = calculator.getRouteWithOneConnection(A, J);
         assertEquals(expected, actual);
-        actual.clear();
-        actual = calculator.getRouteWithOneConnection(A, B);
+
+    }
+
+    @Test
+    public void getRouteWithOneConnection_same_lines(){
+        List<Station> actual = calculator.getRouteWithOneConnection(A, B);
         assertEquals(null, actual);
     }
 
     @Test
     public void getRouteWithTwoConnections() {
-        List<Station> expected = new ArrayList<>();
-        expected.add(B);
-        expected.add(C);
-        expected.add(D);
-        expected.add(J);
-        expected.add(K);
-        expected.add(L);
+        List<Station> expected = Arrays.asList(B, C, D, J, K, L);
         List<Station> actual = calculator.getRouteWithTwoConnections(B, L);
         assertEquals(expected, actual);
-        actual.clear();
-        actual = calculator.getRouteWithTwoConnections(A, B);
+
+    }
+
+    @Test
+    public void getRouteWithTwoConnections_same_lines(){
+        List<Station> actual = calculator.getRouteWithTwoConnections(A, B);
         assertEquals(null, actual);
     }
 
@@ -168,14 +165,12 @@ public class RouteCalculatorTest {
         List<Station> expected = new ArrayList<>();
         expected.add(A);
         assertEquals(expected, actual);
-        actual.clear();
-        expected.clear();
-        actual = calculator.getRouteOnTheLine(D, A);
-        expected.add(D);
-        expected.add(C);
-        expected.add(B);
-        expected.add(A);
-        assertEquals(expected, actual);
+    }
 
+    @Test
+    public void getRouteOnTheLine_reverse_route(){
+        List<Station> actual = calculator.getRouteOnTheLine(D, A);
+        List<Station> expected = Arrays.asList(D, C, B, A);
+        assertEquals(expected, actual);
     }
 }
