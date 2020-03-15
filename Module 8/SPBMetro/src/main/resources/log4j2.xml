@@ -5,16 +5,28 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
-        <File name="MyFile" fileName="logs/app.log" immediateFlush="true">
+        <File name="History" fileName="logs/history.log" immediateFlush="true">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="INPUT_HISTORY" />
+            </Filters>
+        </File>
+        <File name="InvalidStations" fileName="logs/invalid.log" immediateFlush="true">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Filters>
+                <MarkerFilter marker="INVALID_STATIONS" />
+            </Filters>
+        </File>
+        <File name="Errors" fileName="logs/errors.log" immediateFlush="true">
             <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
 
     </appenders>
     <loggers>
         <root level="debug">
-            <appender-ref ref="MyFile" level="info"/>
-            <AppenderRef ref="errorLogger" level="error"/>
-            <AppenderRef ref="fileLogger" level="info"/>
+            <appender-ref ref="History" level="info"/>
+            <AppenderRef ref="Errors" level="error"/>
+            <AppenderRef ref="InvalidStations" level="info"/>
         </root>
     </loggers>
 </configuration>
