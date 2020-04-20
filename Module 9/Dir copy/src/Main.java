@@ -22,7 +22,6 @@ public class Main {
 
                         try {
                             Path temp = Paths.get("exampleCopied/" + originalPath.toAbsolutePath().relativize(currentPath).toString());
-                            System.out.printf("%s -> %s%n", currentPath, temp);
                             Files.copy(currentPath, temp, StandardCopyOption.REPLACE_EXISTING);// копируем файл в папку относительно destination
                         } catch (IOException e) {
                             e.printStackTrace();

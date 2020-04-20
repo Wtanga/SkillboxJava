@@ -1,5 +1,6 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,18 @@ public class Main {
 
     public static void main(String[] args) {
         ArrayList<Operation> operations = loadStaffFromFile();
-        System.out.println(operations.get(85).getLoss());
+        Double totalIncome = 0.0;
+        Double totalLoss = 0.0;
+        Double balance;
+        System.out.println(operations.get(0).getLoss());
+        for(int i = 0; i < operations.size(); i++){
+            totalIncome += operations.get(i).getIncome();
+            totalLoss += operations.get(i).getLoss();
+        }
+        balance = totalIncome - totalLoss;
+        System.out.println(totalIncome);
+        System.out.println(totalLoss);
+        System.out.println(balance);
 
     }
     private static ArrayList<Operation> loadStaffFromFile() {
