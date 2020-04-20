@@ -8,13 +8,13 @@ import java.nio.file.StandardCopyOption;
 public class Main {
     public static void main(String[] args) throws IOException {
         Path originalPath = Paths.get("example");
-        Path copiedPath = Paths.get("exampleCopied/");
         Files.walk(originalPath)
                 .forEach(file -> {
                     Path currentPath = Paths.get(file.toAbsolutePath().toString());
                     if (Files.isDirectory(file)) {
                         try {
-                            Files.createDirectory(copiedPath);
+                            Path tempDir = Paths.get("exampleCopied/" + originalPath.toAbsolutePath().relativize(currentPath).toString());
+                            Files.createDirectory(tempDir);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
