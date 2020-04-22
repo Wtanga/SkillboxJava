@@ -10,8 +10,7 @@ public class Operation {
     private Double income;
     private Double loss;
 
-    public Operation(Date dateOfOperation, String operationDescription, Double income, Double loss){
-        this.dateOfOperation = dateOfOperation;
+    public Operation(String operationDescription, Double income, Double loss) {
         this.operationDescription = operationDescription;
         this.income = income;
         this.loss = loss;
@@ -25,7 +24,28 @@ public class Operation {
         return loss;
     }
 
-    public String getOperationDescription() {
+    public String getDescription() {
         return operationDescription;
     }
+
+    private static class Summary {
+        double income;
+        double withdraw;
+
+        Summary(double income, double withdraw) {
+            this.income = income;
+            this.withdraw = withdraw;
+        }
+
+        // сложение сумм
+        static Summary merge(Summary s1, Summary s2) {
+            return new Summary(s1.income + s2.income, s1.withdraw + s2.withdraw);
+        }
+        // mapper - конвертация из Transaction
+        static Summary fromTransaction(Operation t) {
+            return new Summary(t.getIncome(), t.getLoss());
+        }
+
+    }
 }
+
