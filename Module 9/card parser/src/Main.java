@@ -2,6 +2,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -23,8 +24,8 @@ public class Main {
         System.out.println(balance);
         operations.stream()
                 .collect(Collectors.groupingBy(Operation::getDescription,
-                        Collectors.mapping(Summary::fromTransaction, Collectors.reducing(Summary::merge))
-        )).forEach((s, summ) -> System.out.println(s + "\t" + summ.income + "\t" + summ.withdraw));
+                        Collectors.mapping(Summary::fromTransaction, Collectors.reducing((s1, s2) -> Summary.merge(s1, s2)))
+        )).forEach((String s, Optional<Summary> sum) -> System.out.println(s + "\t" + sum.getIncome + "\t" + sum.withdraw));
 
     }
     private static ArrayList<Operation> loadStaffFromFile() {
@@ -54,31 +55,32 @@ public class Main {
         }
         return operations;
     }
+
     public static class Summary {
-        static double income;
-        static double withdraw;
+        protected double income;
+        protected double withdraw;
 
         Summary(double income, double withdraw) {
-            this.income = income;
-            this.withdraw = withdraw;
-        }
+                this.income = income;
+                this.withdraw = withdraw;
+            }
 
-        static double getIncome (){
-            return income;
-        }
+            double getIncome (){
+                return income;
+            }
 
-        static double getWithdraw (){
-            return income;
-        }
+            double getWithdraw (){
+                return income;
+            }
 
-        // сложение сумм
-        static Summary merge(Summary s1, Summary s2) {
-            return new Summary(s1.income + s2.income, s1.withdraw + s2.withdraw);
-        }
-        // mapper - конвертация из Transaction
-        static Summary fromTransaction(Operation t) {
-            return new Summary(t.getIncome(), t.getLoss());
-        }
+            // сложение сумм
+            static Summary merge(Summary s1, Summary s2) {
+                return new Summary(s1.income + s2.income, s1.withdraw + s2.withdraw);
+            }
+            // mapper - конвертация из Transaction
+            static Summary fromTransaction(Operation t) {
+                return new Summary(t.getIncome(), t.getLoss());
+            }
 
-    }
+        }
 }

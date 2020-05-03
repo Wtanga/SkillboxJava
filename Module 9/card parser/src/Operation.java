@@ -1,11 +1,4 @@
-import java.util.Date;
-
 public class Operation {
-    private String typeOfAccount;
-    private String numberOfAccount;
-    private String value;
-    private Date dateOfOperation;
-    private String wiringReference;
     private String operationDescription;
     private Double income;
     private Double loss;
