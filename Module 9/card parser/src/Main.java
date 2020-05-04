@@ -19,14 +19,14 @@ public class Main {
             totalLoss += operations.get(i).getLoss();
         }
         balance = totalIncome - totalLoss;
-        System.out.println(totalIncome);
-        System.out.println(totalLoss);
-        System.out.println(balance);
+        System.out.println("Пришло: " + totalIncome);
+        System.out.println("Ушло: " + totalLoss);
+        System.out.println("Баланс: " + balance);
         operations.stream()
                 .collect(Collectors.groupingBy(Operation::getDescription,
-                        Collectors.mapping(Summary::fromTransaction, Collectors.reducing((s1, s2) -> Summary.merge(s1, s2)))
-        )).forEach((String s, Optional<Summary> sum) -> System.out.println(s + "\t" + sum.getIncome + "\t" + sum.withdraw));
-
+                        Collectors.mapping(Summary::fromTransaction,
+                                Collectors.reducing((s1, s2) -> Summary.merge(s1, s2)))
+        )).forEach((String s, Optional<Summary> sum) -> System.out.println(s + "\t" + sum.get().getIncome() + "\t" + sum.get().getWithdraw()));
     }
     private static ArrayList<Operation> loadStaffFromFile() {
         ArrayList<Operation> operations = new ArrayList<>();
@@ -57,7 +57,7 @@ public class Main {
     }
 
     public static class Summary {
-        protected double income;
+        private double income;
         protected double withdraw;
 
         Summary(double income, double withdraw) {
