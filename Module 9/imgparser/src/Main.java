@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,7 +30,9 @@ public class Main {
                     ioException.printStackTrace();
                 }
                 try {
-                    Files.copy(inputStream, new File(url.getPath()).toPath());
+                    Path temp = Paths.get("");
+                    Files.copy(inputStream, new File(temp.toAbsolutePath().toString() + url.getPath()).toPath());
+                    inputStream.close();
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
@@ -36,6 +40,7 @@ public class Main {
         } catch (IOException e) {
             System.out.println("Проблема при загрузке страницы");
         }
+
     }
 
 }
