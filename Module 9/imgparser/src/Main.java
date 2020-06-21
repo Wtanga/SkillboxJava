@@ -1,6 +1,7 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +10,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,21 +22,13 @@ public class Main {
                 URL url = null;
                 try {
                     url = new URL(e.attr("src"));
-                } catch (MalformedURLException malformedURLException) {
-                    malformedURLException.printStackTrace();
-                }
-                InputStream inputStream = null;
-                try {
-                    inputStream = url.openStream();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-                try {
+                    String  urlString = url.toString();
+                    InputStream in = new URL(url.toString()).openStream();
                     Path temp = Paths.get("");
-                    Files.copy(inputStream, new File(temp.toAbsolutePath().toString() + url.getPath()).toPath());
-                    inputStream.close();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    Files.copy(in, Paths.get(temp.toAbsolutePath().toString() + url.getPath()), StandardCopyOption.REPLACE_EXISTING);
+                    in.close();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             });
         } catch (IOException e) {
