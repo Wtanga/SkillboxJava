@@ -1,11 +1,7 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
-import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,10 +15,8 @@ public class Main {
             Document doc = Jsoup.connect(lenta).maxBodySize(0).get();
 
             doc.select("img").forEach(e -> {
-                URL url = null;
                 try {
-                    url = new URL(e.attr("src"));
-                    String  urlString = url.toString();
+                    URL url = new URL(e.attr("src"));
                     InputStream in = new URL(url.toString()).openStream();
                     Path temp = Paths.get("");
                     Files.copy(in, Paths.get(temp.toAbsolutePath().toString() + url.getPath()), StandardCopyOption.REPLACE_EXISTING);
