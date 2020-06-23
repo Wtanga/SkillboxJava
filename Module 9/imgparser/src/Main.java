@@ -1,5 +1,6 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -13,14 +14,17 @@ public class Main {
         String lenta = "https://lenta.ru/";
         try {
             Document doc = Jsoup.connect(lenta).maxBodySize(0).get();
-
             doc.select("img").forEach(e -> {
                 try {
                     URL url = new URL(e.attr("src"));
+                    // if (url.toString().contains(".jpg")) {
+
                     InputStream in = new URL(url.toString()).openStream();
                     Path temp = Paths.get("");
-                    Files.copy(in, Paths.get(temp.toAbsolutePath().toString() + url.getPath()), StandardCopyOption.REPLACE_EXISTING);
+                    Files.createDirectories(Paths.get(temp.toAbsolutePath() + url.getPath()));
+                    Files.copy(in, Paths.get(temp.toAbsolutePath() + url.getPath().replace(" //", "")), StandardCopyOption.REPLACE_EXISTING);
                     in.close();
+                    //    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
