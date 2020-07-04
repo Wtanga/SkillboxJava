@@ -1,19 +1,15 @@
 package core;
 
 public class Station {
-    Line line;
+    String line;
     String StationName;
 
-    public Station(String name, Line line)
+
+    public Station(String name)
     {
         this.StationName = name;
-        this.line = line;
     }
 
-    public Line getLine()
-    {
-        return line;
-    }
 
     public String getStationName()
     {

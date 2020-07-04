@@ -12,7 +12,6 @@ public class Line {
     {
         this.number = number;
         this.lineName = name;
-        stations = new ArrayList<>();
     }
 
     public String getNumber()
@@ -25,8 +24,4 @@ public class Line {
         return lineName;
     }
 
-    public void addStation(Station station)
-    {
-        stations.add(station);
-    }
 }
