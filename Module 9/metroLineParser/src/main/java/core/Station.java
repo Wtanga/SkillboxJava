@@ -1,27 +1,14 @@
 package core;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Station {
-    String line;
-    String StationName;
-    private List<Station> stations;
+    String station;
+
 
 
     public Station(String name)
     {
-        this.StationName = name;
-        stations = new ArrayList<>();
+        this.station = name;
     }
 
-    public void addStation(Station station)
-    {
-        stations.add(station);
-    }
-
-    public String getStationName()
-    {
-        return StationName;
-    }
 }

@@ -5,15 +5,14 @@ import java.io.File;
 import java.io.IOException;
 import core.*;
 import org.jsoup.select.Elements;
-
 import java.util.*;
 
 public class Main {
     public static ObjectMapper objectMapper = new ObjectMapper();
     public static List<Line> linesList = new ArrayList<>();
-    public static Map<String,List <Station>> metroMap = new LinkedHashMap<>();
+    public static Map<String, List<Station>> metroMap = new HashMap<>();
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
         String metro = "https://www.moscowmap.ru/metro.html#lines";
         try {
             Document doc = Jsoup.connect(metro).maxBodySize(0).get();
@@ -25,8 +24,11 @@ public class Main {
             Elements namesOfStations = doc.getElementsByClass("js-metro-stations");
             namesOfStations.forEach(el -> {
                 el.children().forEach(element -> {
-                    metroMap.put(el.attr("data-line"),
-                           );
+                    if (!metroMap.containsKey(el.attr("data-line"))) {
+                        metroMap.put(el.attr("data-line"), new ArrayList<>());
+                    }
+                    metroMap.get(el.attr("data-line"))
+                            .add(new Station(element.getElementsByClass("name").text()));
                 });
             });
         } catch (IOException e) {
@@ -37,7 +39,7 @@ public class Main {
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(path, metroMap);
         } catch (IOException e) {
-            e.printStackTrace();;
+            e.printStackTrace();
         }
     }
 }
