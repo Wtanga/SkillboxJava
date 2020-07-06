@@ -11,7 +11,7 @@ import java.util.*;
 public class Main {
     public static ObjectMapper objectMapper = new ObjectMapper();
     public static List<Line> linesList = new ArrayList<>();
-    public static Map<String, Station> metroMap = new LinkedHashMap<>();
+    public static Map<String,List <Station>> metroMap = new LinkedHashMap<>();
 
     public static void main(String[] args)  {
         String metro = "https://www.moscowmap.ru/metro.html#lines";
@@ -26,7 +26,7 @@ public class Main {
             namesOfStations.forEach(el -> {
                 el.children().forEach(element -> {
                     metroMap.put(el.attr("data-line"),
-                           new Station(element.getElementsByClass("name").text()));
+                           );
                 });
             });
         } catch (IOException e) {
@@ -35,7 +35,7 @@ public class Main {
 
         File path = new File("src/main/resources/map.json");
         try {
-            objectMapper.writeValue(path, metroMap);
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(path, metroMap);
         } catch (IOException e) {
             e.printStackTrace();;
         }
