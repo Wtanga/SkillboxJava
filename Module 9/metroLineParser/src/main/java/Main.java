@@ -10,7 +10,7 @@ import java.util.*;
 public class Main {
     public static ObjectMapper objectMapper = new ObjectMapper();
     public static List<Line> linesList = new ArrayList<>();
-    public static Map<String, List<Station>> metroMap = new HashMap<>();
+    public static Map<String, List<Station>> stationsList = new LinkedHashMap<>();
 
     public static void main(String[] args) {
         String metro = "https://www.moscowmap.ru/metro.html#lines";
@@ -24,17 +24,19 @@ public class Main {
             Elements namesOfStations = doc.getElementsByClass("js-metro-stations");
             namesOfStations.forEach(el -> {
                 el.children().forEach(element -> {
-                    if (!metroMap.containsKey(el.attr("data-line"))) {
-                        metroMap.put(el.attr("data-line"), new ArrayList<>());
+                    if (!stationsList.containsKey(el.attr("data-line"))) {
+                        stationsList.put(el.attr("data-line"), new ArrayList<>());
                     }
-                    metroMap.get(el.attr("data-line"))
+                    stationsList.get(el.attr("data-line"))
                             .add(new Station(element.getElementsByClass("name").text()));
                 });
             });
         } catch (IOException e) {
             System.out.println("Проблема при загрузке страницы");
         }
-
+        Metro metroMap = new Metro();
+        metroMap.setStations(stationsList);
+        metroMap.setLines(linesList);
         File path = new File("src/main/resources/map.json");
         try {
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(path, metroMap);
