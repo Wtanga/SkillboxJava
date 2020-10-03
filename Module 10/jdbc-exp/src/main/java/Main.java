@@ -10,6 +10,7 @@ import java.sql.*;
 
 public class Main {
     public static void main(String[] args) {
+//                  код, который выведет среднее количество покупок в месяц для каждого курса за 2018 год.
 //        String url = "jdbc:mysql://localhost:3306/skillbox?useSSL=false&serverTimezone=UTC";
 //        String user = "root";
 //        String password = "testtest";
