@@ -17,7 +17,7 @@ public class Main {
         Teacher teacher  = session.get(Teacher.class, 1);
         System.out.println(teacher.getSalary() + " - " + teacher.getName());
         Course course = session.get(Course.class, 1);
-        System.out.println(course.getStudents().size() + "\nStudents count: " + course.getStudentsCount());
+
 
         sessionFactory.close();
     }

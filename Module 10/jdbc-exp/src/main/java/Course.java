@@ -1,4 +1,6 @@
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -19,7 +21,7 @@ public class Course {
 
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     private Teacher teacher;
 
     @Column(name = "students_count")
@@ -30,12 +32,15 @@ public class Course {
     @Column(name = "price_per_hour")
     private float pricePerHour;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "Subscriptions",
         joinColumns = {@JoinColumn(name = "course_id")},
         inverseJoinColumns = {@JoinColumn(name = "student_id")}
     )
-    private List<Student> students;
+
+    // mappedBy = "id.course" - имеет такой вид в том случае если используется @EmbededId и поле с ключем в классе Subscriptions имеет название id
+    @OneToMany(mappedBy = "id.course", cascade = CascadeType.ALL) // Вот тут мы уже можем использовать CascadeType.ALL так как если удаляется курс, то пускай и подписки удаляются, а если уж удаление делается каскадно, то и остальные действия тоже можно делать каскадно :)
+    private List<Subscription> subscriptions = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -109,11 +114,7 @@ public class Course {
         this.pricePerHour = pricePerHour;
     }
 
-    public List<Student> getStudents() {
-        return students;
-    }
-
-    public void setStudents(List<Student> students) {
-        this.students = students;
+    public void addStudent(Student student) {
+        subscriptions.add(new Subscription(this, student, new Date())); // Добавляем подписку студенту на текущий курс с текущей датой :)
     }
 }
