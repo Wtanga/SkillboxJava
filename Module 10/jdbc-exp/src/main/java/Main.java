@@ -16,7 +16,7 @@ public class Main {
         System.out.println(student.getRegistrationDate());
         Teacher teacher  = session.get(Teacher.class, 1);
         System.out.println(teacher.getSalary() + " - " + teacher.getName());
-        Course course = session.get(Course.class, 1);
+
 
 
         sessionFactory.close();
