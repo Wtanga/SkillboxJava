@@ -5,21 +5,21 @@ import java.util.Date;
 @Table(name = "Subscriptions")
 public class Subscription {
     @EmbeddedId
-    private SubscriptionId id;
+    private StudentCourseCompositeKey  id;
 
     @Column(name = "subscription_Date")
     private Date subscriptionDate;
 
-    public Subscription(SubscriptionId subscriptionId, Date subscriptionDate){
+    public Subscription(StudentCourseCompositeKey  subscriptionId, Date subscriptionDate){
         this.id = subscriptionId;
         this.subscriptionDate = subscriptionDate;
     }
 
-    public SubscriptionId getId() {
+    public StudentCourseCompositeKey  getId() {
         return id;
     }
 
-    public void setId(SubscriptionId id) {
+    public void setId(StudentCourseCompositeKey  id) {
         this.id = id;
     }
 

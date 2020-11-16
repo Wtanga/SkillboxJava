@@ -3,7 +3,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-class SubscriptionId implements Serializable {
+class StudentCourseCompositeKey  implements Serializable {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
@@ -12,10 +12,10 @@ class SubscriptionId implements Serializable {
     @JoinColumn(name = "student_id")
     private Student student;
 
-    public SubscriptionId() {
+    public StudentCourseCompositeKey () {
     }
 
-    public SubscriptionId(Course courseId, Student studentId) {
+    public StudentCourseCompositeKey (Course courseId, Student studentId) {
         this.course = courseId;
         this.student = studentId;
     }
@@ -31,8 +31,8 @@ class SubscriptionId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof SubscriptionId)) return false;
-        SubscriptionId that = (SubscriptionId) o;
+        if (!(o instanceof StudentCourseCompositeKey )) return false;
+        StudentCourseCompositeKey  that = (StudentCourseCompositeKey ) o;
         return Objects.equals(getCourse(), that.getCourse()) &&
                 Objects.equals(getStudent(), that.getStudent());
     }
