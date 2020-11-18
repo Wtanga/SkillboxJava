@@ -4,28 +4,26 @@ import java.util.Objects;
 
 @Embeddable
 class StudentCourseCompositeKey  implements Serializable {
-    @ManyToOne
     @JoinColumn(name = "course_id")
-    private Course course;
+    private int courseId;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "student_id")
-    private Student student;
+    private int studentId;
 
     public StudentCourseCompositeKey () {
     }
 
-    public StudentCourseCompositeKey (Course courseId, Student studentId) {
-        this.course = courseId;
-        this.student = studentId;
+    public StudentCourseCompositeKey (int courseId, int studentId) {
+        this.courseId = courseId;
+        this.studentId = studentId;
     }
 
-    public Course getCourse() {
-        return course;
+    public int getCourse() {
+        return courseId;
     }
 
-    public Student getStudent() {
-        return student;
+    public int getStudent() {
+        return studentId;
     }
 
     @Override
