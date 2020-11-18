@@ -7,14 +7,12 @@ import java.io.File;
 
 public class ImageResizer implements Runnable {
     private File[] files;
-    private int newWidth;
     private String dstFolder;
     private long start;
     private static int targetSize = 300;
 
-    public ImageResizer(File[] files, int newWidth, String dstFolder, long start) {
+    public ImageResizer(File[] files, String dstFolder, long start) {
         this.files = files;
-        this.newWidth = newWidth;
         this.dstFolder = dstFolder;
         this.start = start;
     }
