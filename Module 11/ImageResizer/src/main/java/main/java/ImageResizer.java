@@ -1,4 +1,5 @@
 package main.java;
+import com.google.common.io.Files;
 import org.imgscalr.Scalr;
 import static org.imgscalr.Scalr.*;
 import javax.imageio.ImageIO;
@@ -29,7 +30,7 @@ public class ImageResizer implements Runnable {
                 }
                 BufferedImage newImage = createThumbnail(image, targetSize);
                 File newFile = new File(dstFolder + "/" + file.getName());
-                ImageIO.write(newImage, "jpg", newFile);
+                ImageIO.write(newImage, Files.getFileExtension(newFile.getName()), newFile);
             }
         }
         catch (Exception ex) {
