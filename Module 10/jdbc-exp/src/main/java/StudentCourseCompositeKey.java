@@ -5,24 +5,24 @@ import java.util.Objects;
 @Embeddable
 class StudentCourseCompositeKey  implements Serializable {
     @JoinColumn(name = "course_id")
-    private int courseId;
+    private Course courseId;
 
     @JoinColumn(name = "student_id")
-    private int studentId;
+    private Student studentId;
 
     public StudentCourseCompositeKey () {
     }
 
-    public StudentCourseCompositeKey (int courseId, int studentId) {
+    public StudentCourseCompositeKey (Course courseId, Student studentId) {
         this.courseId = courseId;
         this.studentId = studentId;
     }
 
-    public int getCourse() {
+    public Course getCourse() {
         return courseId;
     }
 
-    public int getStudent() {
+    public Student getStudent() {
         return studentId;
     }
 

@@ -109,6 +109,6 @@ public class Course {
     }
 
     public void addStudent(Student student) {
-        subscriptions.add(new Subscription((new StudentCourseCompositeKey( this.getId(), student.getId())), new Date()));
+        subscriptions.add(new Subscription(new StudentCourseCompositeKey(this, student), new Date()));
     }
 }

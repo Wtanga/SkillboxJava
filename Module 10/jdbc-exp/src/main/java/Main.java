@@ -24,7 +24,7 @@ public class Main {
             LinkedPurchaseList linkedPurchaseList = new LinkedPurchaseList();
             linkedPurchaseList.setId(
                     new StudentCourseCompositeKey(
-                          Integer.parseInt(row[4].toString()), Integer.parseInt(row[3].toString())
+
                     ));
             System.out.println(linkedPurchaseList);
         }

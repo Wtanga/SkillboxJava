@@ -10,6 +10,10 @@ public class Subscription {
     @Column(name = "subscription_Date")
     private Date subscriptionDate;
 
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
+
     public Subscription(StudentCourseCompositeKey  subscriptionId, Date subscriptionDate){
         this.id = subscriptionId;
         this.subscriptionDate = subscriptionDate;
