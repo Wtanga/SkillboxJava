@@ -21,10 +21,10 @@ public class Main
             ImageResizer resizer = new ImageResizer(files1, dstFolder, start);
             Thread t = new Thread(resizer);
             threadList.add(t);
+            t.start();
         }
         for(Thread t : threadList){
             t.join();
-            t.start();
         }
     }
 }
