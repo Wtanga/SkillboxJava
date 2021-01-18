@@ -1,7 +1,4 @@
-import org.hibernate.SQLQuery;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.boot.*;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -26,6 +23,18 @@ public class Main {
                     new StudentCourseCompositeKey(
 
                     ));
+            try( ScrollableResults scrollableResults = session.createQuery(
+                    "select s.id, c.id " +
+                            "from PurchaseList pl, Students s, Courses c " +
+                            "where pl.course_name = c.name, pl.student_name = s.name" )
+                    .setParameter( "", "" )
+                    .scroll()
+            ) {
+                while(scrollableResults.next()) {
+                    StudentCourseCompositeKey studentCourseCompositeKey = (StudentCourseCompositeKey) scrollableResults.get()[0];
+                    linkedPurchaseList.setId(new StudentCourseCompositeKey(studentCourseCompositeKey));
+                }
+            }
             System.out.println(linkedPurchaseList);
         }
 
