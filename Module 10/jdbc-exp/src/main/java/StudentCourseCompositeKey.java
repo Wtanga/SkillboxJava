@@ -4,9 +4,11 @@ import java.util.Objects;
 
 @Embeddable
 class StudentCourseCompositeKey  implements Serializable {
+    @ManyToOne
     @JoinColumn(name = "course_id")
     private Course courseId;
 
+    @ManyToOne
     @JoinColumn(name = "student_id")
     private Student studentId;
 

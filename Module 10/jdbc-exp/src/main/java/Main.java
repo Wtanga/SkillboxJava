@@ -26,13 +26,13 @@ public class Main {
             try( ScrollableResults scrollableResults = session.createQuery(
                     "select s.id, c.id " +
                             "from PurchaseList pl, Students s, Courses c " +
-                            "where pl.course_name = c.name, pl.student_name = s.name" )
-                    .setParameter( "", "" )
+                            "where pl.course_name = c.name AND pl.student_name = s.name" )
                     .scroll()
             ) {
                 while(scrollableResults.next()) {
-                    StudentCourseCompositeKey studentCourseCompositeKey = (StudentCourseCompositeKey) scrollableResults.get()[0];
-                    linkedPurchaseList.setId(new StudentCourseCompositeKey(studentCourseCompositeKey));
+                    Course course = (Course) scrollableResults.get()[1];
+                    Student student = (Student) scrollableResults.get()[2];
+                    linkedPurchaseList.setId(new StudentCourseCompositeKey(course, student));
                 }
             }
             System.out.println(linkedPurchaseList);
