@@ -33,7 +33,7 @@ public class Course {
     private float pricePerHour;
 
 
-    @OneToMany(mappedBy = "id.course", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "id.courseId", cascade = CascadeType.ALL)
     private List<Subscription> subscriptions = new ArrayList<>();
 
     public int getId() {

@@ -14,30 +14,20 @@ public class Main {
 
         Session session = sessionFactory.openSession();
 
-        SQLQuery query = session.createSQLQuery("select pl.course_name, pl.student_name, s.id, c.id, s.name, c.name " +
-                "from PurchaseList pl, Students s, Courses c where pl.course_name = c.name, pl.student_name = s.name");
-        List<Object[]> rows = query.list();
-        for(Object[] row : rows){
-            LinkedPurchaseList linkedPurchaseList = new LinkedPurchaseList();
-            linkedPurchaseList.setId(
-                    new StudentCourseCompositeKey(
-
-                    ));
-            try( ScrollableResults scrollableResults = session.createQuery(
-                    "select s.id, c.id " +
-                            "from PurchaseList pl, Students s, Courses c " +
-                            "where pl.course_name = c.name AND pl.student_name = s.name" )
-                    .scroll()
-            ) {
-                while(scrollableResults.next()) {
-                    Course course = (Course) scrollableResults.get()[1];
-                    Student student = (Student) scrollableResults.get()[2];
-                    linkedPurchaseList.setId(new StudentCourseCompositeKey(course, student));
-                }
+        LinkedPurchaseList linkedPurchaseList = new LinkedPurchaseList();
+        try (ScrollableResults scrollableResults = session.createSQLQuery(
+                "select s.id, c.id " +
+                        "from PurchaseList pl, Students s, Courses c " +
+                        "where pl.course_name = c.name AND pl.student_name = s.name")
+                .scroll()
+        ) {
+            while (scrollableResults.next()) {
+                Course course = (Course) scrollableResults.get()[1];
+                Student student = (Student) scrollableResults.get()[2];
+                linkedPurchaseList.setId(new StudentCourseCompositeKey(course, student));
             }
-            System.out.println(linkedPurchaseList);
         }
-
+        System.out.println(linkedPurchaseList);
 
         sessionFactory.close();
     }
