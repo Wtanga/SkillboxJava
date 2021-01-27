@@ -16,7 +16,7 @@ public class Main {
 
         LinkedPurchaseList linkedPurchaseList = new LinkedPurchaseList();
         try (ScrollableResults scrollableResults = session.createSQLQuery(
-                "select s.id, c.id " +
+                "select s.id as student_id, c.id as course_id " +
                         "from PurchaseList pl, Students s, Courses c " +
                         "where pl.course_name = c.name AND pl.student_name = s.name")
                 .scroll()
