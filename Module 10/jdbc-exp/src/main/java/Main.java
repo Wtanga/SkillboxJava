@@ -3,7 +3,6 @@ import org.hibernate.boot.*;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.util.List;
 
 
 public class Main {
@@ -22,8 +21,8 @@ public class Main {
                 .scroll()
         ) {
             while (scrollableResults.next()) {
-                Course course = (Course) scrollableResults.get()[1];
-                Student student = (Student) scrollableResults.get()[2];
+                Course course = session.get(Course.class, (int) scrollableResults.get()[1]);
+                Student student = session.get(Student.class, (int) scrollableResults.get()[0]);
                 linkedPurchaseList.setId(new StudentCourseCompositeKey(course, student));
             }
         }
